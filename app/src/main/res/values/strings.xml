@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Ground Booking System</string>
+    <string name="default_web_client_id">YOUR_WEB_CLIENT_ID_HERE</string>
+    <string name="ground_image">Ground Image</string>
+    <string name="ground_name">Ground Name</string>
+    <string name="location">Location</string>
+    <string name="ground_type_prefix">Type: Football</string>
+    <string name="description">Description</string>
+    <string name="ground_description">Ground description</string>
+    <string name="price_per_hour">₹500/hour</string>
+    <string name="select_date">Select Date</string>
+    <string name="select_time_slot">Select Time Slot</string>
+    <string name="no_slot_selected">No slot selected</string>
+    <string name="booking_confirm">Confirm Booking</string>
+</resources>

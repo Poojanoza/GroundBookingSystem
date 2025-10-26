@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "67324931019",
+    "project_id": "groundbookingsystem-688f3",
+    "storage_bucket": "groundbookingsystem-688f3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:67324931019:android:a05163b22f0b7cf2a1a44e",
+        "android_client_info": {
+          "package_name": "com.example.groundbookingsystem"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDe_eONOdg61rUbYQu-HZKUFDvsIh3QwxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
