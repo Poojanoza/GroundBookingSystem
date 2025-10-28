@@ -1,6 +1,5 @@
 plugins {
     id("com.android.application")
-    id("com.google.gms.google-services")
 }
 
 android {
@@ -41,12 +40,11 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
 
-    // Firebase dependencies (using BoM)
-    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-database")
-    implementation("com.google.firebase:firebase-storage")
-    implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
 
     // Image loading (Glide)
     implementation("com.github.bumptech.glide:glide:4.16.0")

@@ -1,113 +1,62 @@
 package com.example.groundbookingsystem;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.groundbookingsystem.R;
 import com.example.groundbookingsystem.adapters.BookingAdapter;
+import com.example.groundbookingsystem.api.ApiClient;
+import com.example.groundbookingsystem.api.ApiService;
 import com.example.groundbookingsystem.models.Booking;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
+import com.example.groundbookingsystem.models.BookingsResponse;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MyBookingsActivity extends AppCompatActivity {
-
-    private RecyclerView bookingsRecyclerView;
-    private ProgressBar progressBar;
-    private TextView emptyTextView;
-
-    private BookingAdapter bookingAdapter;
-    private List<Booking> bookingList;
-
-    private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
+    private RecyclerView recyclerView;
+    private BookingAdapter adapter;
+    private List<Booking> bookingList = new ArrayList<>();
+    private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_bookings);
 
-        // Initialize Firebase
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        recyclerView = findViewById(R.id.bookingsRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new BookingAdapter(this, bookingList);
+        recyclerView.setAdapter(adapter);
 
-        // Setup toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        toolbar.setNavigationOnClickListener(v -> finish());
+        apiService = ApiClient.getClient().create(ApiService.class);
 
-        // Initialize views
-        bookingsRecyclerView = findViewById(R.id.bookingsRecyclerView);
-        progressBar = findViewById(R.id.progressBar);
-        emptyTextView = findViewById(R.id.emptyTextView);
-
-        // Setup RecyclerView
-        bookingList = new ArrayList<>();
-        bookingAdapter = new BookingAdapter(this, bookingList);
-        bookingsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        bookingsRecyclerView.setAdapter(bookingAdapter);
-
-        // Load bookings
-        loadMyBookings();
+        SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
+        String userId = prefs.getString("userId", "");
+        loadBookings(userId);
     }
 
-    private void loadMyBookings() {
-        String userId = mAuth.getCurrentUser().getUid();
-        progressBar.setVisibility(View.VISIBLE);
+    private void loadBookings(String userId) {
+        apiService.getBookings(userId).enqueue(new Callback<BookingsResponse>() {
+            @Override
+            public void onResponse(Call<BookingsResponse> call, Response<BookingsResponse> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().success) {
+                    bookingList.clear();
+                    bookingList.addAll(response.body().data);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(MyBookingsActivity.this, "Failed to load bookings", Toast.LENGTH_SHORT).show();
+                }
+            }
 
-        mDatabase.child("bookings")
-                .orderByChild("userId")
-                .equalTo(userId)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        bookingList.clear();
-
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            Booking booking = dataSnapshot.getValue(Booking.class);
-                            if (booking != null) {
-                                bookingList.add(booking);
-                            }
-                        }
-
-                        // Sort by timestamp (newest first)
-                        Collections.reverse(bookingList);
-
-                        bookingAdapter.notifyDataSetChanged();
-                        progressBar.setVisibility(View.GONE);
-
-                        if (bookingList.isEmpty()) {
-                            emptyTextView.setVisibility(View.VISIBLE);
-                            bookingsRecyclerView.setVisibility(View.GONE);
-                        } else {
-                            emptyTextView.setVisibility(View.GONE);
-                            bookingsRecyclerView.setVisibility(View.VISIBLE);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        progressBar.setVisibility(View.GONE);
-                        emptyTextView.setVisibility(View.VISIBLE);
-                    }
-                });
+            @Override
+            public void onFailure(Call<BookingsResponse> call, Throwable t) {
+                Toast.makeText(MyBookingsActivity.this, "Network Error: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

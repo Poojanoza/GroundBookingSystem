@@ -1,93 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardElevation="4dp"
-    app:cardCornerRadius="12dp">
+    android:orientation="vertical"
+    android:padding="8dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/bookingName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:text="Ground Name"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+    <TextView
+        android:id="@+id/bookingDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date: "/>
 
-            <TextView
-                android:id="@+id/bookingIdTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Booking ID: #12345"
-                android:textSize="12sp"
-                android:textColor="@android:color/darker_gray" />
+    <TextView
+        android:id="@+id/bookingTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Slot: "/>
 
-            <TextView
-                android:id="@+id/statusTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Confirmed"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/holo_green_dark"
-                android:padding="6dp"
-                android:background="@android:drawable/dialog_holo_light_frame" />
-        </LinearLayout>
+    <TextView
+        android:id="@+id/bookingStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status: "/>
 
-        <TextView
-            android:id="@+id/groundNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ground Name"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:layout_marginTop="8dp" />
-
-        <TextView
-            android:id="@+id/dateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date: 25-10-2025"
-            android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
-            android:layout_marginTop="4dp" />
-
-        <TextView
-            android:id="@+id/timeSlotTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Time: 06:00 PM"
-            android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
-            android:layout_marginTop="4dp" />
-
-        <TextView
-            android:id="@+id/priceTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="₹500"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorPrimary"
-            android:layout_marginTop="8dp" />
-
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:text="Cancel Booking"
-            android:textSize="12sp"
-            android:layout_marginTop="12dp"
-            android:backgroundTint="@android:color/holo_red_dark" />
-
-    </LinearLayout>
-
-</com.google.android.material.card.MaterialCardView>
+    <TextView
+        android:id="@+id/bookingPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="₹0"/>
+</LinearLayout>
