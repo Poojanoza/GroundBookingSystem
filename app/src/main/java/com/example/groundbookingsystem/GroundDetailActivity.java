@@ -2,14 +2,17 @@ package com.example.groundbookingsystem;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.groundbookingsystem.models.Ground;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 public class GroundDetailActivity extends AppCompatActivity {
 
@@ -20,9 +23,11 @@ public class GroundDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ground_detail);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Ground Details");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
         ground = (Ground) getIntent().getSerializableExtra("ground");
@@ -34,8 +39,11 @@ public class GroundDetailActivity extends AppCompatActivity {
         TextView descView = findViewById(R.id.groundDescriptionTextView);
         TextView priceView = findViewById(R.id.groundPriceTextView);
         Button bookBtn = findViewById(R.id.bookButton);
+        CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsingToolbar);
 
         if (ground != null) {
+            collapsingToolbar.setTitle(ground.name); // Set title for collapsing toolbar
+            
             // Load image
             if (ground.image_url != null && !ground.image_url.isEmpty()) {
                 Glide.with(this).load(ground.image_url).into(imageView);
@@ -56,8 +64,11 @@ public class GroundDetailActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

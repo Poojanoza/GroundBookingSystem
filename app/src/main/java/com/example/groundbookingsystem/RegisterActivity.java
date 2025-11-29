@@ -3,6 +3,7 @@ package com.example.groundbookingsystem;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +11,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.groundbookingsystem.api.ApiClient;
 import com.example.groundbookingsystem.api.ApiService;
 import com.example.groundbookingsystem.models.AuthResponse;
@@ -33,6 +36,14 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        // Setup Toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         nameEditText = findViewById(R.id.nameEditText);
         emailEditText = findViewById(R.id.emailEditText);
         phoneEditText = findViewById(R.id.phoneEditText);
@@ -45,9 +56,19 @@ public class RegisterActivity extends AppCompatActivity {
         apiService = ApiClient.getClient().create(ApiService.class);
 
         registerButton.setOnClickListener(view -> registerUser());
-        loginTextView.setOnClickListener(view ->
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class))
-        );
+        loginTextView.setOnClickListener(view -> {
+            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            finish();
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // Handle Back button
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void registerUser() {

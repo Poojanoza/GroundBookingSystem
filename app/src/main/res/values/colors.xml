@@ -1,13 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="green">#FF4CAF50</color>
-    <color name="red">#FFF44336</color>
-    <color name="orange">#FFFF9800</color>
+    <!-- Brand Colors - Fresh & Light Theme -->
+    <color name="primary">#0288D1</color> <!-- Light Blue -->
+    <color name="primary_dark">#01579B</color>
+    <color name="primary_light">#B3E5FC</color>
+    <color name="accent">#FFAB00</color> <!-- Amber Accent -->
+
+    <!-- Neutral Colors -->
+    <color name="black">#212121</color>
+    <color name="white">#FFFFFF</color>
+    <color name="background_light">#F5F7FA</color> <!-- Very light grey/blue tint for background -->
+    <color name="text_primary">#37474F</color>
+    <color name="text_secondary">#78909C</color>
+    <color name="divider">#ECEFF1</color>
+
+    <!-- State Colors -->
+    <color name="success">#66BB6A</color>
+    <color name="error">#EF5350</color>
+    <color name="success_green">@color/success</color>
+    <color name="error_red">@color/error</color>
+    <color name="warning_orange">@color/accent</color>
+
+    <!-- Aliases for Layout Compatibility -->
+    <color name="secondary">@color/accent</color>
+    <color name="gray_light">@color/background_light</color>
+    <color name="gray_dark">@color/text_primary</color>
+    <color name="gray_medium">@color/text_secondary</color>
+
+    <!-- Mappings -->
+    <color name="purple_200">@color/primary_light</color>
+    <color name="purple_500">@color/primary</color>
+    <color name="purple_700">@color/primary_dark</color>
+    <color name="teal_200">@color/accent</color>
+    <color name="teal_700">@color/primary</color>
+    <color name="green">@color/success</color>
+    <color name="red">@color/error</color>
+    <color name="orange">@color/accent</color>
 </resources>
