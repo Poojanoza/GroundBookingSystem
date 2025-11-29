@@ -42,10 +42,10 @@ public class GroundDetailActivity extends AppCompatActivity {
             }
             
             nameView.setText(ground.name);
-            locationView.setText("Location: " + ground.location);
-            typeView.setText("Type: " + ground.type);
-            descView.setText("Description: " + ground.description);
-            priceView.setText("Price: ₹" + ground.price + " per hour");
+            locationView.setText(getString(R.string.ground_location_format, ground.location));
+            typeView.setText(getString(R.string.ground_type_format, ground.type));
+            descView.setText(getString(R.string.ground_description_format, ground.description));
+            priceView.setText(getString(R.string.ground_price_format, String.valueOf(ground.price)));
         }
 
         bookBtn.setOnClickListener(v -> {

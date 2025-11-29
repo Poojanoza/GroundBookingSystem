@@ -12,4 +12,8 @@
     <string name="select_time_slot">Select Time Slot</string>
     <string name="no_slot_selected">No slot selected</string>
     <string name="booking_confirm">Confirm Booking</string>
+    <string name="ground_location_format">Location: %1$s</string>
+    <string name="ground_type_format">Type: %1$s</string>
+    <string name="ground_description_format">Description: %1$s</string>
+    <string name="ground_price_format">Price: ₹%1$s per hour</string>
 </resources>

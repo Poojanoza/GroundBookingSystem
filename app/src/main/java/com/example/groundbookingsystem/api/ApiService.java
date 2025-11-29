@@ -3,7 +3,8 @@ package com.example.groundbookingsystem.api;
 import com.example.groundbookingsystem.models.*;
 import retrofit2.Call;
 import retrofit2.http.*;
-import java.util.Map;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public interface ApiService {
     // Auth Endpoints
@@ -74,6 +75,11 @@ public interface ApiService {
     Call<AdminBookingsResponse> getBookingsSummary(
             @Header("Authorization") String token
     );
+    
+    @GET("/api/admin/statistics")
+    Call<AdminStatsResponse> getAdminStatistics(
+            @Header("Authorization") String token
+    );
 
     @GET("/api/admin/grounds/{groundId}/bookings")
     Call<AdminBookingsResponse> getGroundBookings(
@@ -99,7 +105,7 @@ public interface ApiService {
     @POST("/api/grounds/upload-image")
     Call<ImageUploadResponse> uploadGroundImage(
             @Header("Authorization") String token,
-            @Part("image") okhttp3.RequestBody image,
-            @Part okhttp3.MultipartBody.Part file
+            @Part("image") RequestBody image,
+            @Part MultipartBody.Part file
     );
 }

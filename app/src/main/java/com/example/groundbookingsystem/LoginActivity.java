@@ -1,7 +1,12 @@
 package com.example.groundbookingsystem;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,7 +16,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.groundbookingsystem.api.ApiClient;
 import com.example.groundbookingsystem.api.ApiService;
@@ -27,19 +35,45 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText emailEditText, passwordEditText;
     private Button loginButton;
-    private TextView registerTextView;
+    private TextView registerTextView, forgotPasswordText;
     private ProgressBar progressBar;
     private ApiService apiService;
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    // Permission is granted
+                } else {
+                    // Permission is denied
+                    // Optionally show a rationale
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // Auto-login check
+        SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
+        String token = prefs.getString("token", null);
+        if (token != null && !token.isEmpty()) {
+            boolean isAdmin = prefs.getBoolean("isAdmin", false);
+            if (isAdmin) {
+                startActivity(new Intent(this, AdminDashboardActivity.class));
+            } else {
+                startActivity(new Intent(this, MainActivity.class));
+            }
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_login);
 
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
         registerTextView = findViewById(R.id.registerTextView);
+        forgotPasswordText = findViewById(R.id.forgotPasswordText);
         progressBar = findViewById(R.id.progressBar);
 
         apiService = ApiClient.getClient().create(ApiService.class);
@@ -49,6 +83,40 @@ public class LoginActivity extends AppCompatActivity {
         registerTextView.setOnClickListener(view ->
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class))
         );
+
+        forgotPasswordText.setOnClickListener(v -> {
+            String email = emailEditText.getText().toString().trim();
+            if (TextUtils.isEmpty(email)) {
+                Toast.makeText(this, "Please enter your email first", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
+            intent.setData(Uri.parse("mailto:"));
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"support@groundbooking.com"});
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Password Reset Request");
+            intent.putExtra(Intent.EXTRA_TEXT, "Please reset password for email: " + email);
+            
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "No email app found. Please contact support manually.", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        checkPermissions();
+    }
+
+    private void checkPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES);
+            }
+        } else {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
+        }
     }
 
     private void loginUser() {

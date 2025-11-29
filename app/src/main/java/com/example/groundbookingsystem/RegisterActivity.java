@@ -16,15 +16,13 @@ import com.example.groundbookingsystem.models.AuthResponse;
 import com.example.groundbookingsystem.models.RegisterRequest;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText nameEditText, emailEditText, phoneEditText, passwordEditText;
+    private EditText nameEditText, emailEditText, phoneEditText, passwordEditText, confirmPasswordEditText;
     private Button registerButton;
     private TextView loginTextView;
     private ProgressBar progressBar;
@@ -39,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailEditText);
         phoneEditText = findViewById(R.id.phoneEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
+        confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText);
         registerButton = findViewById(R.id.registerButton);
         loginTextView = findViewById(R.id.loginTextView);
         progressBar = findViewById(R.id.progressBar);
@@ -56,6 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString().trim();
         String phone = phoneEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
+        String confirmPassword = confirmPasswordEditText.getText().toString().trim();
 
         if (TextUtils.isEmpty(name)) {
             nameEditText.setError("Name is required");
@@ -67,6 +67,14 @@ public class RegisterActivity extends AppCompatActivity {
         }
         if (TextUtils.isEmpty(password)) {
             passwordEditText.setError("Password is required");
+            return;
+        }
+        if (TextUtils.isEmpty(confirmPassword)) {
+            confirmPasswordEditText.setError("Confirm Password is required");
+            return;
+        }
+        if (!password.equals(confirmPassword)) {
+            confirmPasswordEditText.setError("Passwords do not match");
             return;
         }
 
@@ -82,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 registerButton.setEnabled(true);
                 if (response.isSuccessful() && response.body() != null && response.body().success) {
-                    Toast.makeText(RegisterActivity.this, "Registration successful! Please log in.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Registration successful! Please log in.", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                     finish();
                 } else {
