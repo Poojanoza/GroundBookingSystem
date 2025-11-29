@@ -17,6 +17,7 @@ import com.example.groundbookingsystem.api.ApiClient;
 import com.example.groundbookingsystem.api.ApiService;
 import com.example.groundbookingsystem.models.AuthResponse;
 import com.example.groundbookingsystem.models.LoginRequest;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -80,12 +81,33 @@ public class LoginActivity extends AppCompatActivity {
                     prefs.edit()
                             .putString("token", response.body().token)
                             .putString("userId", response.body().user.id)
+                            .putString("userName", response.body().user.name)
+                            .putBoolean("isAdmin", response.body().user.is_admin)
                             .apply();
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    
+                    // Route to appropriate screen based on role
+                    if (response.body().user.is_admin) {
+                        startActivity(new Intent(LoginActivity.this, AdminDashboardActivity.class));
+                    } else {
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    }
                     finish();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Login failed: " + (response.body() != null ? response.body().message : "Unknown error"), Toast.LENGTH_LONG).show();
+                    String errorMessage = "Login failed";
+                    if (response.errorBody() != null) {
+                        try {
+                            AuthResponse errorResponse = new Gson().fromJson(response.errorBody().charStream(), AuthResponse.class);
+                            if (errorResponse != null && errorResponse.message != null) {
+                                errorMessage = errorResponse.message;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else if (response.body() != null && response.body().message != null) {
+                         errorMessage = response.body().message;
+                    }
+                    Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_LONG).show();
                 }
             }
 

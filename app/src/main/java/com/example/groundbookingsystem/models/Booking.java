@@ -1,4 +1,5 @@
 package com.example.groundbookingsystem.models;
+
 public class Booking {
     public String id;
     public String user_id;
@@ -7,7 +8,13 @@ public class Booking {
     public String time_slot;
     public String status;
     public double price;
-    public Ground ground; // Optional, if you embed ground info with booking
+    public Ground grounds; // API returns as 'grounds'
+    public Ground ground; // Fallback compatibility
+    public User user;
+    
+    // For adapter access compatibility
+    public String getDate() { return booking_date; }
+    public String getSlot() { return time_slot; }
 
     public Booking() {}
 }

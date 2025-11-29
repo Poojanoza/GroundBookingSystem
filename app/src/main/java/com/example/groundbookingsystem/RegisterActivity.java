@@ -14,6 +14,10 @@ import com.example.groundbookingsystem.api.ApiClient;
 import com.example.groundbookingsystem.api.ApiService;
 import com.example.groundbookingsystem.models.AuthResponse;
 import com.example.groundbookingsystem.models.RegisterRequest;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,9 +86,20 @@ public class RegisterActivity extends AppCompatActivity {
                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                     finish();
                 } else {
-                    Toast.makeText(RegisterActivity.this, (response.body() != null && response.body().message != null)
-                            ? response.body().message
-                            : "Registration failed", Toast.LENGTH_LONG).show();
+                    String errorMessage = "Registration failed";
+                    if (response.errorBody() != null) {
+                        try {
+                            AuthResponse errorResponse = new Gson().fromJson(response.errorBody().charStream(), AuthResponse.class);
+                            if (errorResponse != null && errorResponse.message != null) {
+                                errorMessage = errorResponse.message;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else if (response.body() != null && response.body().message != null) {
+                         errorMessage = response.body().message;
+                    }
+                    Toast.makeText(RegisterActivity.this, errorMessage, Toast.LENGTH_LONG).show();
                 }
             }
 

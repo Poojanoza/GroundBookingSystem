@@ -5,6 +5,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -55,6 +57,30 @@
         <!-- Profile Activity -->
         <activity
             android:name=".ProfileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Admin Create Ground Activity -->
+        <activity
+            android:name=".AdminCreateGroundActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Admin Dashboard Activity -->
+        <activity
+            android:name=".AdminDashboardActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Booking Activity -->
+        <activity
+            android:name=".BookingActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- My Bookings History Activity -->
+        <activity
+            android:name=".BookingHistoryActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 

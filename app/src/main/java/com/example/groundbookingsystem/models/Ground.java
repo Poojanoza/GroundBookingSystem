@@ -1,6 +1,8 @@
 package com.example.groundbookingsystem.models;
 
-public class Ground {
+import java.io.Serializable;
+
+public class Ground implements Serializable {
     public String id;
     public String name;
     public String location;
