@@ -1,33 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Brand Colors - Fresh & Light Theme -->
-    <color name="primary">#0288D1</color> <!-- Light Blue -->
-    <color name="primary_dark">#01579B</color>
-    <color name="primary_light">#B3E5FC</color>
-    <color name="accent">#FFAB00</color> <!-- Amber Accent -->
+    <color name="primary">#3B82F6</color> <!-- Blue -->
+    <color name="primary_dark">#1D4ED8</color>
+    <color name="primary_light">#BFDBFE</color>
+    <color name="accent">#F59E0B</color> <!-- Amber for highlights -->
 
-    <!-- Neutral Colors -->
-    <color name="black">#212121</color>
+    <!-- Neutral & Text Colors -->
     <color name="white">#FFFFFF</color>
-    <color name="background_light">#F5F7FA</color> <!-- Very light grey/blue tint for background -->
-    <color name="text_primary">#37474F</color>
-    <color name="text_secondary">#78909C</color>
-    <color name="divider">#ECEFF1</color>
+    <color name="background_light">#F8FAFC</color> <!-- Off-white background -->
+    <color name="text_primary">#0F172A</color> <!-- Navy Blue -->
+    <color name="text_secondary">#475569</color>
+    <color name="divider">#E2E8F0</color>
 
     <!-- State Colors -->
-    <color name="success">#66BB6A</color>
-    <color name="error">#EF5350</color>
-    <color name="success_green">@color/success</color>
-    <color name="error_red">@color/error</color>
-    <color name="warning_orange">@color/accent</color>
+    <color name="success">#22C55E</color>
+    <color name="error">#EF4444</color>
+    <color name="booked_slot_color">#E2E8F0</color>
+    <color name="available_slot_color">#DBEAFE</color>
 
-    <!-- Aliases for Layout Compatibility -->
-    <color name="secondary">@color/accent</color>
-    <color name="gray_light">@color/background_light</color>
-    <color name="gray_dark">@color/text_primary</color>
-    <color name="gray_medium">@color/text_secondary</color>
-
-    <!-- Mappings -->
+    <!-- Legacy Mappings for Compatibility -->
     <color name="purple_200">@color/primary_light</color>
     <color name="purple_500">@color/primary</color>
     <color name="purple_700">@color/primary_dark</color>

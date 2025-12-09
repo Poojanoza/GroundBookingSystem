@@ -105,7 +105,25 @@ public interface ApiService {
     @POST("/api/grounds/upload-image")
     Call<ImageUploadResponse> uploadGroundImage(
             @Header("Authorization") String token,
-            @Part("image") RequestBody image,
-            @Part MultipartBody.Part file
+            @Part MultipartBody.Part image
+    );
+
+    // Ground Management Endpoints (Admin)
+    @GET("/api/admin/grounds")
+    Call<GroundsResponse> getAdminGrounds(
+            @Header("Authorization") String token
+    );
+
+    @PUT("/api/grounds/{groundId}")
+    Call<GroundDetailResponse> updateGround(
+            @Path("groundId") String groundId,
+            @Header("Authorization") String token,
+            @Body CreateGroundRequest request
+    );
+
+    @DELETE("/api/grounds/{groundId}")
+    Call<MessageResponse> deleteGround(
+            @Path("groundId") String groundId,
+            @Header("Authorization") String token
     );
 }

@@ -85,6 +85,18 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <!-- Admin Grounds Management Activity -->
+        <activity
+            android:name=".AdminGroundsManagementActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Admin Edit Ground Activity -->
+        <activity
+            android:name=".AdminEditGroundActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

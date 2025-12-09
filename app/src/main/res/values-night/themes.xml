@@ -1,32 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.GroundBookingSystem" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.GroundBookingSystem" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary_dark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/accent</item>
-        <item name="colorSecondaryVariant">@color/accent</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/text_primary</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:statusBarColor">#000000</item> <!-- Dark status bar for dark theme -->
         <!-- Background -->
-        <item name="android:windowBackground">#121212</item>
-        <!-- Customize your theme here. -->
-        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.GroundBooking.BottomSheetDialog</item>
-    </style>
-
-    <style name="ThemeOverlay.GroundBooking.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/Widget.GroundBooking.BottomSheet</item>
-    </style>
-
-    <style name="Widget.GroundBooking.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.GroundBooking.LargeComponent</item>
-    </style>
-
-    <style name="ShapeAppearance.GroundBooking.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">16dp</item>
+        <item name="android:windowBackground">#121212</item> <!-- Standard dark theme background -->
     </style>
 </resources>

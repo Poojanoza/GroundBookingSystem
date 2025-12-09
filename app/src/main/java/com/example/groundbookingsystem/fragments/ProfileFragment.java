@@ -33,13 +33,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
 public class ProfileFragment extends Fragment {
 
     private TextView nameView, emailView, phoneView;
     private EditText nameEdit, phoneEdit;
     private Button editBtn, changePassBtn, logoutBtn;
+    private ImageView editNameIcon, editPhoneIcon, closeEditIcon;
+    private ViewGroup editProfileCard;
     private ProgressBar progressBar;
     private String token;
+    private ApiService apiService;
 
     @Nullable
     @Override
@@ -56,22 +62,33 @@ public class ProfileFragment extends Fragment {
         changePassBtn = view.findViewById(R.id.changePasswordBtn);
         logoutBtn = view.findViewById(R.id.logoutBtn);
         progressBar = view.findViewById(R.id.progressBar);
+        editNameIcon = view.findViewById(R.id.editNameIcon);
+        editPhoneIcon = view.findViewById(R.id.editPhoneIcon);
+        closeEditIcon = view.findViewById(R.id.closeEditIcon);
+        editProfileCard = view.findViewById(R.id.editProfileCard);
 
         if (getContext() != null) {
             // Get preferences
             SharedPreferences prefs = getContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
             token = prefs.getString("token", "");
 
-            // Set display values
-            nameView.setText(prefs.getString("userName", "Name"));
-            emailView.setText(prefs.getString("userEmail", "Email"));
-            phoneView.setText(prefs.getString("userPhone", "Phone"));
-            nameEdit.setText(prefs.getString("userName", ""));
-            phoneEdit.setText(prefs.getString("userPhone", ""));
+            // Load user profile from API
+            apiService = ApiClient.getClient().create(ApiService.class);
+            loadUserProfile();
         }
 
-        // API service
-        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        // Edit icon listeners
+        if (editNameIcon != null) {
+            editNameIcon.setOnClickListener(v -> showEditDialog("name"));
+        }
+        
+        if (editPhoneIcon != null) {
+            editPhoneIcon.setOnClickListener(v -> showEditDialog("phone"));
+        }
+        
+        if (closeEditIcon != null) {
+            closeEditIcon.setOnClickListener(v -> hideEditDialog());
+        }
 
         // Edit profile button listener
         editBtn.setOnClickListener(v -> {
@@ -103,8 +120,9 @@ public class ProfileFragment extends Fragment {
                                         .putString("userPhone", newPhone)
                                         .apply();
 
-                                nameView.setText("Name: " + newName);
-                                phoneView.setText("Phone: " + newPhone);
+                                nameView.setText(newName);
+                                phoneView.setText(newPhone);
+                                hideEditDialog();
 
                                 Toast.makeText(getContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
                             } else {
@@ -194,5 +212,78 @@ public class ProfileFragment extends Fragment {
         });
 
         return view;
+    }
+    
+    private void loadUserProfile() {
+        if (getContext() == null || apiService == null) return;
+        
+        progressBar.setVisibility(View.VISIBLE);
+        
+        apiService.getUserProfile("Bearer " + token).enqueue(new Callback<UserProfileResponse>() {
+            @Override
+            public void onResponse(Call<UserProfileResponse> call, Response<UserProfileResponse> response) {
+                progressBar.setVisibility(View.GONE);
+                if (response.isSuccessful() && response.body() != null && response.body().success && getContext() != null) {
+                    UserProfileResponse.UserProfile user = response.body().data;
+                    if (user != null) {
+                        // Update UI with user data
+                        nameView.setText(user.name != null ? user.name : "Name");
+                        emailView.setText(user.email != null ? user.email : "Email");
+                        phoneView.setText(user.phone != null ? user.phone : "Phone");
+                        
+                        // Update preferences
+                        SharedPreferences prefs = getContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+                        prefs.edit()
+                            .putString("userName", user.name != null ? user.name : "")
+                            .putString("userEmail", user.email != null ? user.email : "")
+                            .putString("userPhone", user.phone != null ? user.phone : "")
+                            .apply();
+                            
+                        // Set edit fields
+                        nameEdit.setText(user.name != null ? user.name : "");
+                        phoneEdit.setText(user.phone != null ? user.phone : "");
+                    }
+                } else {
+                    // Fallback to preferences if API fails
+                    SharedPreferences prefs = getContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+                    nameView.setText(prefs.getString("userName", "Name"));
+                    emailView.setText(prefs.getString("userEmail", "Email"));
+                    phoneView.setText(prefs.getString("userPhone", "Phone"));
+                    nameEdit.setText(prefs.getString("userName", ""));
+                    phoneEdit.setText(prefs.getString("userPhone", ""));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserProfileResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                // Fallback to preferences
+                if (getContext() != null) {
+                    SharedPreferences prefs = getContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+                    nameView.setText(prefs.getString("userName", "Name"));
+                    emailView.setText(prefs.getString("userEmail", "Email"));
+                    phoneView.setText(prefs.getString("userPhone", "Phone"));
+                    nameEdit.setText(prefs.getString("userName", ""));
+                    phoneEdit.setText(prefs.getString("userPhone", ""));
+                }
+            }
+        });
+    }
+    
+    private void showEditDialog(String field) {
+        if (editProfileCard != null) {
+            editProfileCard.setVisibility(View.VISIBLE);
+            if (field.equals("name")) {
+                nameEdit.requestFocus();
+            } else if (field.equals("phone")) {
+                phoneEdit.requestFocus();
+            }
+        }
+    }
+    
+    private void hideEditDialog() {
+        if (editProfileCard != null) {
+            editProfileCard.setVisibility(View.GONE);
+        }
     }
 }

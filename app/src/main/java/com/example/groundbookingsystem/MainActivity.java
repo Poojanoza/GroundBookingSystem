@@ -30,26 +30,35 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            Fragment selectedFragment = null;
-            int itemId = item.getItemId();
-            
-            if (itemId == R.id.nav_home) {
-                selectedFragment = new HomeFragment();
-                if (getSupportActionBar() != null) getSupportActionBar().setTitle("Available Grounds");
-            } else if (itemId == R.id.nav_bookings) {
-                selectedFragment = new MyBookingsFragment();
-                if (getSupportActionBar() != null) getSupportActionBar().setTitle("My Bookings");
-            } else if (itemId == R.id.nav_profile) {
-                selectedFragment = new ProfileFragment();
-                if (getSupportActionBar() != null) getSupportActionBar().setTitle("My Profile");
-            }
+            try {
+                Fragment selectedFragment = null;
+                int itemId = item.getItemId();
+                
+                if (itemId == R.id.nav_home) {
+                    selectedFragment = new HomeFragment();
+                    if (getSupportActionBar() != null) getSupportActionBar().setTitle("Available Grounds");
+                } else if (itemId == R.id.nav_bookings) {
+                    selectedFragment = new MyBookingsFragment();
+                    if (getSupportActionBar() != null) getSupportActionBar().setTitle("My Bookings");
+                } else if (itemId == R.id.nav_profile) {
+                    selectedFragment = new ProfileFragment();
+                    if (getSupportActionBar() != null) getSupportActionBar().setTitle("My Profile");
+                }
 
-            if (selectedFragment != null) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, selectedFragment)
-                        .commit();
+                if (selectedFragment != null) {
+                    try {
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, selectedFragment)
+                                .commitAllowingStateLoss();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
             }
-            return true;
         });
 
         // Load default fragment
