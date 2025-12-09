@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Ground Booking System");
+            getSupportActionBar().setTitle(getString(R.string.app_name));
         }
 
         bottomNavigationView = findViewById(R.id.bottomNavigation);
