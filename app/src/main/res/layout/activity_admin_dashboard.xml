@@ -195,218 +195,112 @@
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
-            <!-- Grounds Management Section -->
+            <!-- Quick Actions Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Grounds Management"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#37474F"
+                android:text="Quick Actions"
+                style="@style/TextH4"
                 android:layout_marginBottom="12dp" />
 
-            <com.google.android.material.card.MaterialCardView
+            <!-- Row 1: Grounds Management & All Bookings -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="#E0E0E0"
-                app:cardBackgroundColor="@color/white">
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginBottom="12dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <!-- Grounds Management Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:gravity="center_vertical">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Manage Your Grounds"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="#37474F" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="View, edit, or delete grounds"
-                            android:textSize="12sp"
-                            android:textColor="#78909C"
-                            android:layout_marginTop="4dp" />
-                    </LinearLayout>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/manageGroundsBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Manage"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        app:backgroundTint="@color/primary"
-                        app:cornerRadius="8dp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Tabs Section -->
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/adminTabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:tabMode="fixed"
-                app:tabGravity="fill"
-                app:tabTextColor="@color/text_secondary"
-                app:tabSelectedTextColor="@color/primary"
-                app:tabIndicatorColor="@color/primary"
-                app:tabIndicatorHeight="3dp" />
-
-            <!-- Filter Section -->
-            <TextView
-                android:id="@+id/manageBookingsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Manage Bookings"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#37474F"
-                android:layout_marginBottom="12dp" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/filterCardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="#E0E0E0"
-                app:cardBackgroundColor="@color/white">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Filter by Date"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="#37474F"
-                        android:layout_marginBottom="12dp" />
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center"
+                        android:onClick="onManageGroundsClick">
 
-                        <Button
-                            android:id="@+id/startDateBtn"
-                            android:layout_width="0dp"
-                            android:layout_height="48dp"
-                            android:layout_weight="1"
-                            android:text="Start"
-                            android:textColor="@color/primary"
-                            android:textSize="14sp"
-                            android:layout_marginEnd="8dp"
-                            android:backgroundTint="#E1F5FE"
-                            app:cornerRadius="8dp"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"/>
-
-                        <Button
-                            android:id="@+id/endDateBtn"
-                            android:layout_width="0dp"
-                            android:layout_height="48dp"
-                            android:layout_weight="1"
-                            android:text="End"
-                            android:textColor="@color/primary"
-                            android:textSize="14sp"
-                            android:layout_marginEnd="8dp"
-                            android:backgroundTint="#E1F5FE"
-                            app:cornerRadius="8dp"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"/>
-
-                        <Button
-                            android:id="@+id/filterBtn"
+                        <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="48dp"
-                            android:text="Go"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/white"
-                            android:backgroundTint="@color/primary"
-                            app:cornerRadius="8dp" />
+                            android:layout_height="wrap_content"
+                            android:text="🏟️"
+                            android:textSize="32sp"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Manage Grounds"
+                            style="@style/TextH5"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="View, edit, delete"
+                            style="@style/TextBodySmall"
+                            android:gravity="center" />
                     </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                </com.google.android.material.card.MaterialCardView>
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp" />
-
-            <!-- Empty State View -->
-            <LinearLayout
-                android:id="@+id/emptyBookingsView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="32dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <!-- All Bookings Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="📋"
-                    android:textSize="64sp"
-                    android:layout_marginBottom="16dp" />
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="No Bookings Found"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginBottom="8dp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center"
+                        android:onClick="onAllBookingsClick">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bookings will appear here when customers book your grounds"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_secondary"
-                    android:gravity="center"
-                    android:maxLines="3" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="📋"
+                            android:textSize="32sp"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="All Bookings"
+                            style="@style/TextH5"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="View all bookings"
+                            style="@style/TextBodySmall"
+                            android:gravity="center" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/bookingsRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="true"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:clipToPadding="false"
-                android:minHeight="200dp" />
         </LinearLayout>
     </ScrollView>
 

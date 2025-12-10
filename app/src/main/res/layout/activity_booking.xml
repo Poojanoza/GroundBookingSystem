@@ -32,13 +32,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:paddingStart="16dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="100dp">
 
-            <!-- Ground Summary Card -->
+            <!-- H1: Ground Summary Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="20dp"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="4dp"
                 app:cardBackgroundColor="@color/white"
@@ -48,40 +51,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:paddingStart="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="20dp">
 
+                    <!-- H3: Section Title -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Booking Summary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary"
+                        style="@style/TextH3"
                         android:layout_marginBottom="16dp" />
 
+                    <!-- H2: Ground Name -->
                     <TextView
                         android:id="@+id/groundNameBooking"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ground Name"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary"
-                        android:layout_marginBottom="8dp" />
+                        style="@style/TextH2"
+                        android:layout_marginBottom="12dp" />
 
+                    <!-- Location Row -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
-                        android:layout_marginBottom="12dp">
+                        android:layout_marginBottom="16dp">
 
                         <ImageView
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:src="@android:drawable/ic_menu_mapmode"
                             app:tint="@color/text_secondary"
-                            android:layout_marginEnd="6dp"/>
+                            android:layout_marginEnd="8dp"/>
 
                         <TextView
                             android:id="@+id/groundLocationBooking"
@@ -89,16 +94,18 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Location"
-                            android:textSize="14sp"
+                            style="@style/TextBodyMedium"
                             android:textColor="@color/text_secondary" />
                     </LinearLayout>
 
+                    <!-- Divider -->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/divider"
-                        android:layout_marginVertical="12dp"/>
+                        android:layout_marginBottom="16dp"/>
 
+                    <!-- Price Row -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -110,7 +117,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Price per hour"
-                            android:textSize="14sp"
+                            style="@style/TextBodyMedium"
                             android:textColor="@color/text_secondary"/>
 
                         <TextView
@@ -118,14 +125,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="₹500"
-                            android:textSize="24sp"
+                            android:textSize="28sp"
                             android:textStyle="bold"
                             android:textColor="@color/primary"/>
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Date Selection Card -->
+            <!-- H1: Date Selection Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -139,15 +146,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:paddingStart="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="20dp">
 
+                    <!-- H4: Section Title -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Select Date"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary"
+                        style="@style/TextH4"
                         android:layout_marginBottom="16dp" />
 
                     <com.google.android.material.button.MaterialButton
@@ -170,7 +179,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="No date selected"
-                        android:textSize="15sp"
+                        style="@style/TextBodyLarge"
                         android:textStyle="bold"
                         android:textColor="@color/primary"
                         android:layout_gravity="center_horizontal"
@@ -178,11 +187,11 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Time Slot Selection Card -->
+            <!-- H1: Time Slot Selection Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="100dp"
+                android:layout_marginBottom="20dp"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="2dp"
                 app:cardBackgroundColor="@color/white"
@@ -192,15 +201,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:paddingStart="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="20dp">
 
+                    <!-- H4: Section Title -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Select Time Slot"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary"
+                        style="@style/TextH4"
                         android:layout_marginBottom="16dp" />
 
                     <GridLayout
@@ -211,7 +222,8 @@
                         android:alignmentMode="alignMargins"
                         android:columnOrderPreserved="false"
                         android:rowOrderPreserved="false"
-                        android:useDefaultMargins="false">
+                        android:useDefaultMargins="false"
+                        android:columnWidth="0dp">
 
                         <!-- Slots will be added dynamically here -->
                     </GridLayout>
@@ -221,7 +233,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="No slot selected"
-                        android:textSize="15sp"
+                        style="@style/TextBodyLarge"
                         android:textStyle="bold"
                         android:textColor="@color/primary"
                         android:layout_gravity="center_horizontal"
@@ -239,16 +251,17 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_margin="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:text="Confirm Booking"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        style="@style/TextH5"
         android:textColor="@color/white"
         app:backgroundTint="@color/primary"
         app:cornerRadius="20dp"
         app:elevation="8dp"
         android:letterSpacing="0.02" />
-            
+        
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"

@@ -3,8 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="20dp"
-    android:layout_marginVertical="8dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="12dp"
     app:cardCornerRadius="24dp"
     app:cardElevation="4dp"
     app:cardBackgroundColor="@color/white"
@@ -46,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|end"
-                android:layout_margin="16dp"
+                android:layout_margin="12dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
                 app:cardBackgroundColor="@color/white">
@@ -56,8 +58,10 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp">
+                    android:paddingStart="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="8dp">
 
                     <TextView
                         android:id="@+id/groundPrice"
@@ -72,8 +76,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="/hr"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_secondary"
+                        style="@style/TextCaption"
                         android:layout_marginStart="2dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -83,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|start"
-                android:layout_margin="16dp"
+                android:layout_margin="12dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
                 app:cardBackgroundColor="@color/white">
@@ -93,8 +96,10 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="6dp">
+                    android:paddingStart="10dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="6dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -107,7 +112,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4.5"
-                        android:textSize="14sp"
+                        style="@style/TextBodySmall"
                         android:textStyle="bold"
                         android:textColor="@color/text_primary"
                         android:layout_marginStart="4dp" />
@@ -115,14 +120,17 @@
             </com.google.android.material.card.MaterialCardView>
         </FrameLayout>
 
-        <!-- Content Section -->
+        <!-- Content Section - Optimized Padding -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:paddingStart="20dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="20dp">
 
-            <!-- Ground Name and Type -->
+            <!-- H3: Ground Name and Type -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,9 +144,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Wankhede Stadium"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_primary" />
+                    style="@style/TextH3"
+                    android:maxLines="2"
+                    android:ellipsize="end" />
                 
                 <!-- Type Chip -->
                 <TextView
@@ -146,16 +154,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cricket"
-                    android:textSize="11sp"
+                    style="@style/TextCaption"
                     android:textColor="@color/primary"
                     android:background="@drawable/bg_rounded"
                     android:backgroundTint="@color/primary_light"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="6dp"
-                    android:textStyle="bold"/>
+                    android:paddingStart="10dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="6dp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="8dp"/>
             </LinearLayout>
 
-            <!-- Location and Distance -->
+            <!-- Location and Distance - Body Medium -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -168,7 +179,7 @@
                     android:layout_height="16dp"
                     android:src="@android:drawable/ic_menu_mapmode"
                     app:tint="@color/text_secondary"
-                    android:layout_marginEnd="6dp"/>
+                    android:layout_marginEnd="8dp"/>
 
                 <TextView
                     android:id="@+id/groundLocation"
@@ -176,7 +187,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Mumbai, India"
-                    android:textSize="14sp"
+                    style="@style/TextBodyMedium"
                     android:textColor="@color/text_secondary" />
 
                 <!-- Distance Badge -->
@@ -185,12 +196,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2.5 km"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_secondary"
+                    style="@style/TextCaption"
                     android:background="@drawable/bg_rounded"
                     android:backgroundTint="@color/background_light"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="4dp" />
+                    android:paddingStart="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="4dp"
+                    android:layout_marginStart="8dp" />
             </LinearLayout>
 
             <!-- Book Button -->
@@ -199,8 +212,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:text="Book Now"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                style="@style/TextH5"
                 android:textColor="@color/white"
                 app:backgroundTint="@color/primary"
                 app:cornerRadius="16dp"

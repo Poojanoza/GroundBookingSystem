@@ -97,6 +97,12 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <!-- Admin All Bookings Activity -->
+        <activity
+            android:name=".AdminAllBookingsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
