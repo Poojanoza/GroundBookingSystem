@@ -71,6 +71,11 @@ public interface ApiService {
     );
 
     // Admin Endpoints
+    @GET("/api/admin/bookings")
+    Call<AdminBookingsResponse> getAdminBookings(
+            @Header("Authorization") String token
+    );
+
     @GET("/api/admin/bookings-summary")
     Call<AdminBookingsResponse> getBookingsSummary(
             @Header("Authorization") String token
