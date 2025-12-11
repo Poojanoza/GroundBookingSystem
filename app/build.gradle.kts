@@ -53,4 +53,7 @@ dependencies {
     // RecyclerView + CardView
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.cardview:cardview:1.0.0")
+
+    // Stripe Payment SDK
+    implementation("com.stripe:stripe-android:20.37.2")
 }

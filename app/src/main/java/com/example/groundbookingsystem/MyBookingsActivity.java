@@ -57,7 +57,7 @@ public class MyBookingsActivity extends AppCompatActivity {
         loadAllBookings();
     }
 
-    private void loadAllBookings() {
+    public void loadAllBookings() {
         if (progressBar != null) {
         progressBar.setVisibility(android.view.View.VISIBLE);
         }

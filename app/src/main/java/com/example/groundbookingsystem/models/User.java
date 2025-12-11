@@ -1,6 +1,8 @@
 package com.example.groundbookingsystem.models;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     public String id; // UUID
     public String name;
     public String email;

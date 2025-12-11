@@ -103,6 +103,12 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <!-- Payment Activity -->
+        <activity
+            android:name=".PaymentActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

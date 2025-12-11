@@ -146,7 +146,35 @@ public class AdminAllBookingsActivity extends AppCompatActivity implements Admin
 
     @Override
     public void onApprove(AdminBooking booking) {
-        ToastUtil.showInfo(this, "Approve functionality not implemented on server");
+        progressBar.setVisibility(View.VISIBLE);
+        apiService.approveBooking(booking.id, "Bearer " + token).enqueue(new Callback<com.example.groundbookingsystem.models.CancelBookingResponse>() {
+            @Override
+            public void onResponse(Call<com.example.groundbookingsystem.models.CancelBookingResponse> call, Response<com.example.groundbookingsystem.models.CancelBookingResponse> response) {
+                progressBar.setVisibility(View.GONE);
+                if (response.isSuccessful() && response.body() != null && response.body().success) {
+                    ToastUtil.showSuccess(AdminAllBookingsActivity.this, "Booking Approved Successfully");
+                    loadAllBookings();
+                } else {
+                    String errorMsg = "Failed to approve booking";
+                    if (response.body() != null && response.body().message != null) {
+                        errorMsg = response.body().message;
+                    } else if (response.errorBody() != null) {
+                        try {
+                            errorMsg = response.errorBody().string();
+                        } catch (Exception e) {
+                            errorMsg = "Error: " + response.code();
+                        }
+                    }
+                    ToastUtil.showError(AdminAllBookingsActivity.this, errorMsg);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.example.groundbookingsystem.models.CancelBookingResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                ToastUtil.showError(AdminAllBookingsActivity.this, "Error: " + t.getMessage());
+            }
+        });
     }
 
     @Override

@@ -86,6 +86,10 @@ public class RegisterActivity extends AppCompatActivity {
             emailEditText.setError("Email is required");
             return;
         }
+        if (TextUtils.isEmpty(phone)) {
+            phoneEditText.setError("Phone is required");
+            return;
+        }
         if (TextUtils.isEmpty(password)) {
             passwordEditText.setError("Password is required");
             return;

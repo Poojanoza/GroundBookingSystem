@@ -10,9 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.example.groundbookingsystem.FeedbackDialog;
 import com.example.groundbookingsystem.R;
+import com.example.groundbookingsystem.api.ApiClient;
+import com.example.groundbookingsystem.api.ApiService;
 import com.example.groundbookingsystem.models.Booking;
+import com.example.groundbookingsystem.models.CancelBookingResponse;
 import com.example.groundbookingsystem.models.Ground;
+import com.google.android.material.button.MaterialButton;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.util.List;
 
@@ -20,10 +33,16 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
 
     private List<Booking> bookings;
     private Context context;
+    private ApiService apiService;
+    private String token;
 
     public BookingAdapter(List<Booking> bookings, Context context) {
         this.bookings = bookings != null ? bookings : new java.util.ArrayList<>();
         this.context = context;
+        
+        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        token = prefs.getString("token", "");
+        apiService = ApiClient.getClient().create(ApiService.class);
     }
 
     @NonNull
@@ -94,6 +113,83 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         if (holder.price != null) {
             holder.price.setText("₹" + (int) booking.price);
         }
+
+        // Handle action buttons (Cancel for pending, Feedback for confirmed)
+        String status = booking.status != null ? booking.status.toLowerCase() : "";
+        boolean isPending = status.equals("pending");
+        boolean isConfirmed = status.equals("confirmed") || status.equals("paid") || 
+                            (booking.payment_status != null && booking.payment_status.equalsIgnoreCase("paid"));
+        
+        // Show/hide action buttons layout
+        if (holder.actionButtonsLayout != null) {
+            holder.actionButtonsLayout.setVisibility((isPending || isConfirmed) ? View.VISIBLE : View.GONE);
+        }
+        
+        // Cancel button - only for pending bookings
+        if (holder.cancelButton != null) {
+            holder.cancelButton.setVisibility(isPending ? View.VISIBLE : View.GONE);
+            if (isPending) {
+                holder.cancelButton.setOnClickListener(v -> cancelBooking(booking.id, position));
+            }
+        }
+        
+        // Feedback button - only for confirmed/paid bookings
+        if (holder.feedbackButton != null) {
+            holder.feedbackButton.setVisibility(isConfirmed ? View.VISIBLE : View.GONE);
+            if (isConfirmed) {
+                holder.feedbackButton.setOnClickListener(v -> {
+                    FeedbackDialog dialog = new FeedbackDialog(context, booking.id, () -> {
+                        // Reload bookings if needed
+                        if (context instanceof com.example.groundbookingsystem.MyBookingsActivity) {
+                            ((com.example.groundbookingsystem.MyBookingsActivity) context).loadAllBookings();
+                        }
+                    });
+                    dialog.show();
+                });
+            }
+        }
+    }
+    
+    private void cancelBooking(String bookingId, int position) {
+        if (token == null || token.isEmpty()) {
+            Toast.makeText(context, "Please login again", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        String authToken = token.startsWith("Bearer ") ? token : "Bearer " + token;
+        apiService.cancelBooking(bookingId, authToken).enqueue(new Callback<CancelBookingResponse>() {
+            @Override
+            public void onResponse(Call<CancelBookingResponse> call, Response<CancelBookingResponse> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().success) {
+                    Toast.makeText(context, "Booking cancelled successfully", Toast.LENGTH_SHORT).show();
+                    // Update booking status
+                    if (position < bookings.size()) {
+                        bookings.get(position).status = "cancelled";
+                        notifyItemChanged(position);
+                    }
+                    // Reload bookings if needed
+                    if (context instanceof com.example.groundbookingsystem.MyBookingsActivity) {
+                        ((com.example.groundbookingsystem.MyBookingsActivity) context).loadAllBookings();
+                    }
+                } else {
+                    String errorMessage = "Failed to cancel booking";
+                    if (response.errorBody() != null) {
+                        try {
+                            android.util.Log.e("BookingAdapter", "Error: " + response.errorBody().string());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CancelBookingResponse> call, Throwable t) {
+                android.util.Log.e("BookingAdapter", "Cancel booking error: " + t.getMessage());
+                Toast.makeText(context, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -103,6 +199,8 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, bookingId, date, slot, status, price;
+        MaterialButton feedbackButton, cancelButton;
+        LinearLayout actionButtonsLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -112,6 +210,9 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             slot = itemView.findViewById(R.id.bookingTime);
             status = itemView.findViewById(R.id.bookingStatus);
             price = itemView.findViewById(R.id.bookingPrice);
+            feedbackButton = itemView.findViewById(R.id.feedbackButton);
+            cancelButton = itemView.findViewById(R.id.cancelBookingButton);
+            actionButtonsLayout = itemView.findViewById(R.id.actionButtonsLayout);
         }
     }
 }

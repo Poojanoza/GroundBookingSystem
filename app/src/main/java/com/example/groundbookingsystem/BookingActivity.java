@@ -1,6 +1,7 @@
 package com.example.groundbookingsystem;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -104,10 +105,11 @@ public class BookingActivity extends AppCompatActivity {
 
                             if (response.isSuccessful() && response.body() != null) {
                                 if (response.body().success || response.body().data != null) {
-                                    Toast.makeText(BookingActivity.this,
-                                            "Booking successful!",
-                                            Toast.LENGTH_SHORT).show();
-                                    finish();
+                                    // Navigate to payment screen
+                                    Intent paymentIntent = new Intent(BookingActivity.this, PaymentActivity.class);
+                                    paymentIntent.putExtra("booking", response.body().data);
+                                    paymentIntent.putExtra("ground", ground);
+                                    startActivityForResult(paymentIntent, 1001);
                                 } else {
                                      Toast.makeText(BookingActivity.this,
                                             "Booking failed: " + response.body().message,
@@ -142,6 +144,17 @@ public class BookingActivity extends AppCompatActivity {
                         }
                     });
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1001 && resultCode == RESULT_OK) {
+            if (data != null && data.getBooleanExtra("payment_success", false)) {
+                Toast.makeText(this, "Payment completed successfully!", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
     }
 
     @Override

@@ -46,10 +46,53 @@ public interface ApiService {
             @Header("Authorization") String token
     );
 
+    @PUT("/api/bookings/{bookingId}/approve")
+    Call<CancelBookingResponse> approveBooking(
+            @Path("bookingId") String bookingId,
+            @Header("Authorization") String token
+    );
+
     @PUT("/api/bookings/{bookingId}/cancel")
     Call<CancelBookingResponse> cancelBooking(
             @Path("bookingId") String bookingId,
             @Header("Authorization") String token
+    );
+
+    // Payment Endpoints
+    @POST("/api/payments/create")
+    Call<PaymentResponse> createPayment(
+            @Header("Authorization") String token,
+            @Body PaymentRequest request
+    );
+
+    @POST("/api/payments/process")
+    Call<PaymentResponse> processPayment(
+            @Header("Authorization") String token,
+            @Body ProcessPaymentRequest request
+    );
+
+    @GET("/api/payments/{paymentId}")
+    Call<PaymentResponse> getPayment(
+            @Path("paymentId") String paymentId,
+            @Header("Authorization") String token
+    );
+
+    // Feedback Endpoints
+    @POST("/api/feedbacks")
+    Call<FeedbackResponse> createFeedback(
+            @Header("Authorization") String token,
+            @Body FeedbackRequest request
+    );
+
+    @GET("/api/feedbacks/booking/{bookingId}")
+    Call<FeedbackResponse> getBookingFeedback(
+            @Path("bookingId") String bookingId,
+            @Header("Authorization") String token
+    );
+
+    @GET("/api/feedbacks/ground/{groundId}")
+    Call<FeedbacksResponse> getGroundFeedbacks(
+            @Path("groundId") String groundId
     );
 
     // User Profile Endpoints

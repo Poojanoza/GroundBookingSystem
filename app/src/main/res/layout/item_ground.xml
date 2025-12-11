@@ -111,7 +111,7 @@
                         android:id="@+id/groundRating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="4.5"
+                        android:text="--"
                         style="@style/TextBodySmall"
                         android:textStyle="bold"
                         android:textColor="@color/text_primary"
